@@ -8,6 +8,7 @@ build:
   before_script:
     - cert=$(cat ca.crt)
     - echo "$cert" > /kaniko/ssl/certs/ca-certificates.crt
+    - update-ca-certificates
   script:
     - /kaniko/executor
       --context "${CI_PROJECT_DIR}"
