@@ -9,7 +9,7 @@ build:
     - cert=$(cat ca.crt)
     - echo "$cert" > /kaniko/ssl/certs/ca-certificates.crt
   script:
-    - echo /kaniko/ssl/certs/ca-certificates.crt
+    - cat /kaniko/ssl/certs/ca-certificates.crt
     # - /kaniko/executor
     #   --context "${CI_PROJECT_DIR}"
     #   --dockerfile "${CI_PROJECT_DIR}/Dockerfile"
