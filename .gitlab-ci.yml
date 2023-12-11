@@ -6,10 +6,10 @@ build:
   tags:
     - docker
   before_script:
-    - echo ${CI_REGISTRY_IMAGE}
-    - echo ${CI_COMMIT_TAG}
+    - cert=$(cat ca.crt)
+    - echo "$cert" > /kaniko/ssl/certs/ca-certificates.crt
   script:
-    - echo foo
+    - echo /kaniko/ssl/certs/ca-certificates.crt
     # - /kaniko/executor
     #   --context "${CI_PROJECT_DIR}"
     #   --dockerfile "${CI_PROJECT_DIR}/Dockerfile"
