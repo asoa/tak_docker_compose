@@ -12,8 +12,6 @@ build:
   #   - echo $(cat docker_ca.crt) >> /kaniko/ssl/certs/ca-certificates.crt
   script:
     - /kaniko/executor 
-      # --insecure-pull
-      # --insecure-registry 192.168.200.138:5000
       --destination "busybox:0.0.1"
       --context 
       --dockerfile "${CI_PROJECT_DIR}/Dockerfile"
