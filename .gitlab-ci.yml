@@ -1,15 +1,16 @@
 build:
   stage: build
   image:
-    # name: busybox
     name: gcr.io/kaniko-project/executor:debug
     entrypoint: [""]
-  # before_script:
-  #   - cert=$(cat ca.crt)
-  #   - echo "$cert" >> /kaniko/ssl/certs/ca-certificates.crt
-  #   - echo $(cat docker_ca.crt) >> /kaniko/ssl/certs/ca-certificates.crt
+  tags:
+    - docker
+  before_script:
+    - cert=$(cat ca.crt)
+    - echo "$cert" >> /kaniko/ssl/certs/ca-certificates.crt
+    - echo $(cat docker_ca.crt) >> /kaniko/ssl/certs/ca-certificates.crt
   script:
-    - /kaniko/executor 
+    - /kaniko/executor
       --context "${CI_PROJECT_DIR}"
       --dockerfile "${CI_PROJECT_DIR}/Dockerfile"
       --destination "busybox:0.0.1"
