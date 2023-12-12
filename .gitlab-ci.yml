@@ -13,7 +13,7 @@ build:
     - /kaniko/executor
       --context "${CI_PROJECT_DIR}"
       --dockerfile "${CI_PROJECT_DIR}/Dockerfile"
-      --image=192.168.200.138:5000/busybox:latest
+      --insecure-pull
       --destination "busybox:0.0.1"
   # rules:
   #   - if: $CI_COMMIT_TAG
