@@ -2,7 +2,7 @@ build:
   stage: build
   image:
     name: busybox
-    entrypoint: ["ls"]
+    # entrypoint: ["ls"]
   tags:
     - docker
   before_script:
