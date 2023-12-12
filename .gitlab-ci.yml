@@ -5,7 +5,7 @@ build:
     name: gcr.io/kaniko-project/executor:debug
     entrypoint: [""]
   tags:
-    - docker
+    - base
   # before_script:
   #   - cert=$(cat ca.crt)
   #   - echo "$cert" >> /kaniko/ssl/certs/ca-certificates.crt
