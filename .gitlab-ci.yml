@@ -4,8 +4,6 @@ build:
     # name: busybox
     name: gcr.io/kaniko-project/executor:debug
     entrypoint: [""]
-  tags:
-    - base
   # before_script:
   #   - cert=$(cat ca.crt)
   #   - echo "$cert" >> /kaniko/ssl/certs/ca-certificates.crt
