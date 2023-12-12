@@ -9,7 +9,6 @@ build:
     - cert=$(cat ca.crt)
     - echo "$cert" >> /kaniko/ssl/certs/ca-certificates.crt
     - echo $(cat docker_ca.crt) >> /kaniko/ssl/certs/ca-certificates.crt
-    - docker pull 192.168.200.138:5000/busybox:latest
   script:
     - /kaniko/executor
       --context "${CI_PROJECT_DIR}"
