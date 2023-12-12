@@ -3,4 +3,4 @@ build:
   tags:
     - base
   script:
-    /usr/bin/docker -v
+    /usr/bin/docker images
