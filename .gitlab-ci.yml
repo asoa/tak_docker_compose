@@ -12,9 +12,9 @@ build:
   #   - echo $(cat docker_ca.crt) >> /kaniko/ssl/certs/ca-certificates.crt
   script:
     - /kaniko/executor 
-      --destination "busybox:0.0.1"
-      --context 
+      --context"${CI_PROJECT_DIR}"
       --dockerfile "${CI_PROJECT_DIR}/Dockerfile"
+      --destination "busybox:0.0.1"
 
   # rules:
   #   - if: $CI_COMMIT_TAG
