@@ -3,4 +3,4 @@ build:
   tags:
     - base
   script:
-    /usr/bin/docker images
+    /usr/bin/docker pull busybox:latest
