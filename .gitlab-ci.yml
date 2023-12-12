@@ -3,4 +3,4 @@ build:
   tags:
     - base
   script:
-    docker -v
+    /usr/bin/docker -v
