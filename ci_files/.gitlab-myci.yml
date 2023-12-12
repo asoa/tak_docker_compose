@@ -1,0 +1,6 @@
+build: 
+  stage: build
+  tags:
+    - base
+  script:
+    docker -v
