@@ -2,6 +2,7 @@ build:
   stage: build
   image:
     name: busybox
+    # name: gcr.io/kaniko-project/executor:debug
     # entrypoint: ["ls"]
   tags:
     - docker
