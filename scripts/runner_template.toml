@@ -1,0 +1,5 @@
+[[runners]]
+[runners.docker]
+    tls_verify = false
+    volumes = ["/cache", "/var/run/docker.sock:/var/run/docker.sock"]
+    network_mode = "gitlab_prod_gitlab"

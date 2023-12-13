@@ -1,0 +1,39 @@
+version: '3.6'
+services:
+  db:
+    image: your_image_name
+    ports:
+      - 8080:80
+    volumes:
+      - ./app:/app
+    environment:
+      - ENV_VARIABLE=value
+  server:
+    image: your_image_name
+    ports:
+      - 8080:80
+    volumes:
+      - ./app:/app
+    environment:
+      - ENV_VARIABLE=value
+  hub:
+    image: your_image_name
+    ports:
+      - 8080:80
+    volumes:
+      - ./app:/app
+    environment:
+      - ENV_VARIABLE=value
+  ca:
+    image: your_image_name
+    ports:
+      - 8080:80
+    volumes:
+      - ./app:/app
+    environment:
+      - ENV_VARIABLE=value
+
+networks:
+  tak_network:
+
+

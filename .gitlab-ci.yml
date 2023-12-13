@@ -1,6 +1,12 @@
-build: 
-  stage: build
+stages:
+  - pull
+  - build
+
+pull_images: 
+  stage: pull
   tags:
     - base
+  before_script:
+    - 
   script:
     /usr/bin/docker pull busybox:latest

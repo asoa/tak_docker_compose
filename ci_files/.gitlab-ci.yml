@@ -6,9 +6,9 @@ build:
   tags:
     - docker
   before_script:
-    - cert=$(cat ca.crt)
+    - cert=$(cat ./public_certs/ca.crt)
     - echo "$cert" >> /kaniko/ssl/certs/ca-certificates.crt
-    - echo $(cat docker_ca.crt) >> /kaniko/ssl/certs/ca-certificates.crt
+    - echo $(cat ./public_certs/docker_ca.crt) >> /kaniko/ssl/certs/ca-certificates.crt
   script:
     - /kaniko/executor
       --context "${CI_PROJECT_DIR}"
