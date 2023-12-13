@@ -4,6 +4,6 @@ create a tak server pipeline
 
 TODO
 ---
-- [ ] use "fetch-manifest-resources" to donwload hardening manifest resources
-- [ ] create script to access artifacts from https://artifacts.tak.gov/ 
+- [ ] use P1 "fetch-manifest-resources" to download hardening manifest resources for local docker build
+- [ ] create script to download artifacts (e.g. tak hardening manifest) from https://artifacts.tak.gov/ 
 
