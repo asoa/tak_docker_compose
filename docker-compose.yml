@@ -2,34 +2,42 @@ version: '3.6'
 services:
   db:
     image: ${REGISTRY}/ironbank/tpc/tak/tak-server-db:${RELEASE_TAG}
+    container_name: tak-db
     ports:
       - 5432:5432
-    volumes:
-      - ./app:/app
     environment:
       - envpass=${DB_PASS}
+    volumes:
+      - tak-db:/var/lib/postgresql/data
   server:
     image: ${REGISTRY}/ironbank/tpc/tak/tak-server:${RELEASE_TAG}
+    container_name: tak-server
     ports:
-      - 8080:80
-    volumes:
-      - ./app:/app
+      - 8080:8080
+      - 8443-8444:8443-8444
+      - 8446:8446
+      - 8087:8087/tcp
+      - 8087:8087/udp
+      - 8088:8088
+      - 9000-9001:9000-9001
     environment:
-      - ENV_VARIABLE=value
+      - envpass=${DB_PASS}
+    depends_on:
+      db:
+        condition: service_healthy
   hub:
     image: ${REGISTRY}/ironbank/tpc/tak/tak-server-fedhub:${RELEASE_TAG}
+    container_name: tak-hub
     ports:
-      - 8080:80
-    volumes:
-      - ./app:/app
-    environment:
-      - ENV_VARIABLE=value
+      - 9100-9102:9100-9102
+    depends_on:
+      server:
+        condition: service_healthy
   ca:
     image: ${REGISTRY}/ironbank/tpc/tak/tak-server-fedhub:${RELEASE_TAG}
+    container_name: tak-ca
     ports:
       - 8080:80
-    volumes:
-      - ./app:/app
     environment:
       - ENV_VARIABLE=value
 
