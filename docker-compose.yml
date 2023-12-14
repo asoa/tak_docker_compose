@@ -39,7 +39,13 @@ services:
     ports:
       - 8080:80
     environment:
-      - ENV_VARIABLE=value
+      - CA_NAME=${CA_NAME}
+      - STATE=${STATE}
+      - CITY=${CITY}
+      - ORGANIZATION_UNIT=${ORGANIZATION_UNIT}
+
+volumes:
+  tak-cert-files:
 
 networks:
   tak_network:
