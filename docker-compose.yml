@@ -1,7 +1,19 @@
 version: '3.6'
 services:
+  ca:
+    image: ${REGISTRY}/ironbank/tpc/tak/tak-server-fedhub:${RELEASE_TAG}
+    build: ./ca
+    container_name: tak-ca
+    ports:
+      - 8080:80
+    environment:
+      - CA_NAME=${CA_NAME}
+      - STATE=${STATE}
+      - CITY=${CITY}
+      - ORGANIZATION_UNIT=${ORGANIZATION_UNIT}
   db:
     image: ${REGISTRY}/ironbank/tpc/tak/tak-server-db:${RELEASE_TAG}
+    build: ./db
     container_name: tak-db
     ports:
       - 5432:5432
@@ -11,6 +23,7 @@ services:
       - tak-db:/var/lib/postgresql/data
   server:
     image: ${REGISTRY}/ironbank/tpc/tak/tak-server:${RELEASE_TAG}
+    build: ./server
     container_name: tak-server
     ports:
       - 8080:8080
@@ -27,25 +40,13 @@ services:
         condition: service_healthy
   hub:
     image: ${REGISTRY}/ironbank/tpc/tak/tak-server-fedhub:${RELEASE_TAG}
+    build: ./hub
     container_name: tak-hub
     ports:
       - 9100-9102:9100-9102
     depends_on:
       server:
         condition: service_healthy
-  ca:
-    image: ${REGISTRY}/ironbank/tpc/tak/tak-server-fedhub:${RELEASE_TAG}
-    container_name: tak-ca
-    ports:
-      - 8080:80
-    environment:
-      - CA_NAME=${CA_NAME}
-      - STATE=${STATE}
-      - CITY=${CITY}
-      - ORGANIZATION_UNIT=${ORGANIZATION_UNIT}
-
-volumes:
-  tak-cert-files:
 
 networks:
   tak_network:
