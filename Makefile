@@ -1,32 +1,42 @@
-.PHONY: make_ca_certs create_dirs clean_dir create_ca_certs create_server_certs compose_up main
+.PHONY: make_ca_certs create_dirs clean_dirs create_ca_certs create_server_certs up down main
 
 include .env
 export
 
+login:
+	@echo '** logging into iron bank **'
+	docker login -u $$DOCKER_USER -p $$DOCKER_PASS
+
 create_dirs:
 	@echo "** creating directory structure **"
-	./scripts/00-make-dirs.sh
+	unzip $$RELEASE.zip 
+	./scripts/03-make-dirs.sh
 
-clean_dir:
-	@echo '** cleaning web dir **'
-	@echo '** cleaning runner dir **'
-	@echo '** cleaning certificates **'
+clean_dirs:
+	@echo '** removing unzipped release and dockerfiles **'
+	./scripts/00-clean-dirs.sh
 
-create_ca_certs:
-	@echo '** creating ca cert **'
-
-create_server_certs:
-	@echo '** creating server cert **'
-
-rebuild_images:
+edit_configs:
+	@echo '** editing config files **'
+	./scripts/01-edit-config.sh
+	
+build:
 	@echo '** rebuilding images **'
+	scripts/04-build-images.sh
 
-compose_up:
+up:
 	@echo '** starting containers **'
+	docker-compose up -d db
+	docker-compose up -d server
 
-compose_down:
+add_user:
+	@echo '** adding user **'
+	scripts/05-add-user.sh
+
+down:
 	@echo '** stopping containers **'
+	docker-compose down -v
 
-main: rebuild_images clean_dir create_ca_certs create_server_certs compose_up
+main: clean_dirs create_dirs edit_configs build up
 
 	

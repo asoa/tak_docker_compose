@@ -1,54 +1,66 @@
 version: '3.6'
 services:
   ca:
-    image: ${REGISTRY}/ironbank/tpc/tak/tak-server-fedhub:${RELEASE_TAG}
-    build: ./ca
-    container_name: tak-ca
-    ports:
-      - 8080:80
-    environment:
-      - CA_NAME=${CA_NAME}
-      - STATE=${STATE}
-      - CITY=${CITY}
-      - ORGANIZATION_UNIT=${ORGANIZATION_UNIT}
+    build: 
+      context: .
+      dockerfile: Dockerfile.ca
+      args:
+        ARG_CA_NAME: ${CA_NAME}
+        ARG_STATE: ${STATE}
+        ARG_CITY: ${CITY}
+        ARG_ORGANIZATIONAL_UNIT: ${ORGANIZATIONAL_UNIT}
+    container_name: ca-setup-hardened
+    healthcheck:
+      test: bash -c "if [[ -f /tak/certs/files/admin.pem ]]; then exit 0; else exit 1; fi"
+      interval: 30s
+      timeout: 15s
+      retries: 5
+      start_period: 30s
+    networks:
+      - takserver-net-hardened
   db:
-    image: ${REGISTRY}/ironbank/tpc/tak/tak-server-db:${RELEASE_TAG}
-    build: ./db
-    container_name: tak-db
+    build: 
+      context: .
+      dockerfile: Dockerfile.hardened-takserver-db
+    container_name: tak-database-hardened
+    environment:
+      - envpass=${DB_PASS}
     ports:
       - 5432:5432
-    environment:
-      - envpass=${DB_PASS}
+    networks:
+      takserver-net-hardened:
+        aliases:
+          - tak-database
     volumes:
-      - tak-db:/var/lib/postgresql/data
+      - tak-db:/var/lib/postgresql/data:z
+    depends_on:
+        ca:
+          condition: service_healthy
   server:
-    image: ${REGISTRY}/ironbank/tpc/tak/tak-server:${RELEASE_TAG}
-    build: ./server
-    container_name: tak-server
+    build: 
+      context: .
+      dockerfile: Dockerfile.hardened-takserver
+    container_name: takserver-hardened
     ports:
-      - 8080:8080
-      - 8443-8444:8443-8444
+      - 8089:8089
+      - 8443:8443
+      - 8444:8444
       - 8446:8446
-      - 8087:8087/tcp
-      - 8087:8087/udp
-      - 8088:8088
-      - 9000-9001:9000-9001
-    environment:
-      - envpass=${DB_PASS}
+    networks:
+      - takserver-net-hardened
     depends_on:
       db:
         condition: service_healthy
-  hub:
-    image: ${REGISTRY}/ironbank/tpc/tak/tak-server-fedhub:${RELEASE_TAG}
-    build: ./hub
-    container_name: tak-hub
-    ports:
-      - 9100-9102:9100-9102
-    depends_on:
-      server:
-        condition: service_healthy
 
 networks:
-  tak_network:
+  takserver-net-hardened:
+    name: takserver-net-hardened
+    ipam:
+      driver: default
+      config:
+        - subnet: ${DOCKER_SUBNET}
 
-
+volumes:
+  tak-db:
+    name: tak-db
+    driver: local
