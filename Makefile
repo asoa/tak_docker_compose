@@ -5,13 +5,13 @@ export
 
 login:
 	@echo '** logging into iron bank **'
-	docker login -u $$DOCKER_USER -p $$DOCKER_PASS
+	docker login -u $$DOCKER_USER -p $$DOCKER_PASS registry1.dso.mil
 
 create_dirs:
 	@echo "** creating directory structure **"
-	unzip $$RELEASE.zip 
-	./scripts/03-make-dirs.sh
-
+	unzip $$RELEASE.zip
+	mv $$RELEASE/docker/Dockerfile.* .
+	
 clean_dirs:
 	@echo '** removing unzipped release and dockerfiles **'
 	./scripts/00-clean-dirs.sh
