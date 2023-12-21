@@ -2,21 +2,15 @@
 
 source .env
 
-if [[ -d ${RELEASE} ]]; then
-  rm -rf ${RELEASE}
+if [[ -d ${TAK_RELEASE} ]]; then
+  rm -rf ${TAK_RELEASE}
 fi
 
-if [[ -f Dockerfile.ca ]]; then
-  rm Dockerfile.ca
+if [[ -d ${HUB_RELEASE} ]]; then
+  rm -rf ${HUB_RELEASE}
 fi
 
-if [[ -f Dockerfile.hardened-takserver ]]; then
-  rm Dockerfile.hardened-takserver
-fi
-
-if [[ -f Dockerfile.hardened-takserver-db ]]; then
-  rm Dockerfile.hardened-takserver-db
-fi
+rm Dockerfile.*
 
 if [[ -d files ]]; then
   rm -rf files

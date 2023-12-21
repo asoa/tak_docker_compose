@@ -9,8 +9,10 @@ login:
 
 create_dirs:
 	@echo "** creating directory structure **"
-	unzip $$RELEASE.zip
-	mv $$RELEASE/docker/Dockerfile.* .
+	unzip $$TAK_RELEASE.zip
+	mv $$TAK_RELEASE/docker/Dockerfile.* .
+	unzip $$HUB_RELEASE.zip
+	mv $$HUB_RELEASE/docker/Dockerfile.* .
 	
 clean_dirs:
 	@echo '** removing unzipped release and dockerfiles **'
