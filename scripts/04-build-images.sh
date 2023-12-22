@@ -12,12 +12,12 @@ done
 
 docker cp ca-setup-hardened:/tak/certs/files files 
 
-[ -d ${RELEASE}/tak/certs/files ] || mkdir ${RELEASE}/tak/certs/files \
-&& docker cp ca-setup-hardened:/tak/certs/files/takserver.jks ${RELEASE}/tak/certs/files/ \
-&& docker cp ca-setup-hardened:/tak/certs/files/truststore-root.jks ${RELEASE}/tak/certs/files/ \
-&& docker cp ca-setup-hardened:/tak/certs/files/fed-truststore.jks ${RELEASE}/tak/certs/files/ \
-&& docker cp ca-setup-hardened:/tak/certs/files/admin.pem ${RELEASE}/tak/certs/files/ \
-&& docker cp ca-setup-hardened:/tak/certs/files/config-takserver.cfg ${RELEASE}/tak/certs/files/
+[ -d ${TAK_RELEASE}/tak/certs/files ] || mkdir ${TAK_RELEASE}/tak/certs/files \
+&& docker cp ca-setup-hardened:/tak/certs/files/takserver.jks ${TAK_RELEASE}/tak/certs/files/ \
+&& docker cp ca-setup-hardened:/tak/certs/files/truststore-root.jks ${TAK_RELEASE}/tak/certs/files/ \
+&& docker cp ca-setup-hardened:/tak/certs/files/fed-truststore.jks ${TAK_RELEASE}/tak/certs/files/ \
+&& docker cp ca-setup-hardened:/tak/certs/files/admin.pem ${TAK_RELEASE}/tak/certs/files/ \
+&& docker cp ca-setup-hardened:/tak/certs/files/config-takserver.cfg ${TAK_RELEASE}/tak/certs/files/
 
 docker-compose build db
 docker-compose build server

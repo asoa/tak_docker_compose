@@ -1,7 +1,10 @@
-.PHONY: make_ca_certs create_dirs clean_dirs create_ca_certs create_server_certs up down main
+.PHONY: make_ca_certs create_dirs clean_dirs create_ca_certs create_server_certs up down main test
 
 include .env
 export
+
+test: 
+	./scripts/06-up.sh $(DEPLOY_HUB)
 
 login:
 	@echo '** logging into iron bank **'
@@ -10,9 +13,9 @@ login:
 create_dirs:
 	@echo "** creating directory structure **"
 	unzip $$TAK_RELEASE.zip
-	mv $$TAK_RELEASE/docker/Dockerfile.* .
+	cp $$TAK_RELEASE/docker/Dockerfile.* .
 	unzip $$HUB_RELEASE.zip
-	mv $$HUB_RELEASE/docker/Dockerfile.* .
+	cp $$HUB_RELEASE/docker/Dockerfile.* .
 	
 clean_dirs:
 	@echo '** removing unzipped release and dockerfiles **'
@@ -28,8 +31,7 @@ build:
 
 up:
 	@echo '** starting containers **'
-	docker-compose up -d db
-	docker-compose up -d server
+	./scripts/06-up.sh $(DEPLOY_HUB)
 
 add_user:
 	@echo '** adding user **'

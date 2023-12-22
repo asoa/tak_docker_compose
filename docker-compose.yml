@@ -51,32 +51,33 @@ services:
     depends_on:
       db:
         condition: service_healthy
-  hubdb:
-    build:
-      context: .
-      dockerfile: Dockerfile.fedhub-db
-    container_name: hubdb
-    ports:
-      - 27017:27017
-    networks:
-      - takserver-net-hardened
-    volumes:
-      - tak-db:/var/lib/postgresql/data:z
-    depends_on:
-      ca:
-        condition: service_healthy
-  hub:
-    build:
-      context: .
-      dockerfile: Dockerfile.fedhub
-    container_name: hub
-    ports:
-      - 8080:8080
-    networks:
-      - takserver-net-hardened
-    depends_on:
-      server:
-        condition: service_healthy
+  # hubdb:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile.fedhub-db
+  #   container_name: hubdb
+  #   ports:
+  #     - 27017:27017
+  #   networks:
+  #     - takserver-net-hardened
+  #   volumes:
+  #     - hub-db:/var/lib/postgresql/data:z
+  #     - ${HUB_RELEASE}/tak/configs:/opt/tak/federation-hub/configs:z
+  #   depends_on:
+  #     db:
+  #       condition: service_healthy
+  # hub:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile.fedhub
+  #   container_name: hub
+  #   ports:
+  #     - 8080:8080
+  #   networks:
+  #     - takserver-net-hardened
+  #   depends_on:
+  #     hubdb:
+  #       condition: service_healthy
 
 networks:
   takserver-net-hardened:
@@ -89,4 +90,7 @@ networks:
 volumes:
   tak-db:
     name: tak-db
+    driver: local
+  hub-db:
+    name: hub-db
     driver: local
