@@ -7,7 +7,7 @@ Prerequisites
 - A Platform One (P1) account and have access to the ironbank registry; https://docs-ironbank.dso.mil/quickstart/consumer-onboarding/
   - This is required to pull the images during the docker build process
 - A tak.gov account and have access to the tak.gov artifactory; https://artifacts.tak.gov/
-  - This is required to download the hardened tak server release package (e.g. takserver-docker-hardened-4.10-RELEASE-68)
+  - This is required to download the hardened tak server release package (e.g. takserver-docker-hardened-5.0-RELEASE-29)
 - clone this repo to your local machine and ensure **takserver-docker-hardened-4.10-RELEASE-68.zip** is in the root directory of this project
 - ensure the make binary is installed on your system (e.g. `sudo apt install make`)
 
@@ -15,7 +15,7 @@ Getting Started
 --- 
 - `Makefile` contains all the commands to build and run the docker containers
 - update .env_template with your environment variables and rename to .env
-- download the tak release package (e.g. takserver-docker-hardened-4.10-RELEASE-68) from artifacts.tak.gov and place in the root directory of this project
+- download the tak release package (e.g. takserver-docker-hardened-5.0-RELEASE-29) from artifacts.tak.gov and place in the root directory of this project
 - `make login`will login to ironbank.dso.mil (using the credentials in .env file)
 - `make main` will execute the following tasks: 
   1. clean the directory of artifacts from previous builds
