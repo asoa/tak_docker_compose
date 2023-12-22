@@ -8,7 +8,7 @@ Prerequisites
   - This is required to pull the images during the docker build process
 - A tak.gov account or access to the tak.gov artifactory; https://artifacts.tak.gov/
   - This is required to download the hardened tak server release package (e.g. takserver-docker-hardened-5.0-RELEASE-29)
-- clone this repo to your local machine and ensure **takserver-docker-hardened-4.10-RELEASE-68.zip** is in the root directory of this project
+- clone this repo to your local machine and ensure **takserver-docker-hardened-5.0-RELEASE-29** is in the root directory of this project
 - ensure the make binary is installed on your system (e.g. `sudo apt install make`)
 
 Getting Started
