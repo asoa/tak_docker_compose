@@ -28,8 +28,8 @@ Getting Started
 
 - `make add_user` will add the admin user certificate to the tak server
 - scp the admin user certificate from the tak server container to your local machine with 
-  - ```scp root@<tak_server_ip:/root/tak/files/admin.p12 .```
-- import the admin.p12 certificate into your browser and browse to https://<tak_server_ip>:8443
+  - ```scp root@<tak_server_ip>:/root/tak/files/admin.p12 .```
+- import the admin.p12 certificate into your browser (use default password from tak server build guide) and browse to https://<tak_server_ip>:8443
 
 ![](documentation/demo2.gif)
 

@@ -19,5 +19,4 @@ docker cp ca-setup-hardened:/tak/certs/files files
 && docker cp ca-setup-hardened:/tak/certs/files/admin.pem ${TAK_RELEASE}/tak/certs/files/ \
 && docker cp ca-setup-hardened:/tak/certs/files/config-takserver.cfg ${TAK_RELEASE}/tak/certs/files/
 
-docker-compose build db
-docker-compose build server
+docker-compose build db server hubdb
