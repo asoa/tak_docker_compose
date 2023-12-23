@@ -35,7 +35,6 @@ Getting Started
 
 - stop and remove the docker containers, volumes, and network with `make down`
 
-
 TODO
 ---
 - [x] create script to replace connection attributes in CoreConfig.xml from .env file
@@ -46,4 +45,6 @@ TODO
 - [ ] create script to download artifacts (e.g. tak hardening manifest) from https://artifacts.tak.gov/
 - [ ] create gitlab-ci pipeline to pull images from ironbank and rebuild images locally using a gitlab runner with the [kaniko](https://github.com/GoogleContainerTools/kaniko) executor
 - [ ] sync docker images built from gitlab-ci pipeline to a local registry deployed on edge compute (e.g. Azure Stack Edge, AWS Snowball, Klas Voyager, etc.)
+- [ ] propose modification to tak server health check; current health check results in unhealthy status
+- [ ] propose health check for fedhub-db
 

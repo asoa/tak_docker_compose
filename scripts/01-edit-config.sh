@@ -35,8 +35,10 @@ function tak_edit_dockerfiles() {
 }
 
 function hub_edit_files() {
-  # tak/federation-hub/configs/federation-hub-broker.yml
+  # replace password in tak/federation-hub/configs/federation-hub-broker.yml with value from .env
   sed -i "s|dbPassword:|dbPassword: "${HUB_DB_PASS}"|g" ${hub_source_dir}/federation-hub/configs/federation-hub-broker.yml
+  # add ${hub_source_dir} to tak/federation-hub/scripts/db in Dockerfile.fedhub-db 
+  sed -i "s|tak/federation-hub/scripts/db|${hub_source_dir}/federation-hub/scripts/db|g" Dockerfile.fedhub-db
 }
 
 main() {
