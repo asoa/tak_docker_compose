@@ -15,7 +15,7 @@ RUN dnf -y upgrade --nodocs \
     && dnf clean all \
     && rm -rf /var/cache/dnf
 
-COPY takserver-docker-hardened-5.0-RELEASE-34/tak/security/*.rpm .
+COPY tak/security/*.rpm .
 # Install EPEL 8 repo
 RUN rpm -Uvh epel-release-latest-8.noarch.rpm
 
@@ -40,7 +40,7 @@ ARG ARG_CITY
 ENV CITY=$ARG_CITY
 ARG ARG_ORGANIZATIONAL_UNIT
 ENV ORGANIZATIONAL_UNIT=$ARG_ORGANIZATIONAL_UNIT
-COPY --chown=tak:0 takserver-docker-hardened-5.0-RELEASE-34/tak/certs/ /tak/certs
+COPY --chown=tak:0 tak/certs/ /tak/certs
 RUN chmod u=rwx /tak/certs \
           && chmod u=rw /tak/certs/*.* \
           && chmod u=rx /tak/certs/*.sh

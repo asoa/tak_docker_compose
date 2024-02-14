@@ -16,7 +16,7 @@ RUN dnf -y upgrade --nodocs \
     && rm -rf /var/cache/dnf
 
 
-COPY takserver-docker-hardened-5.0-RELEASE-34/tak/security/*.rpm .
+COPY tak/security/*.rpm .
 
 # Install EPEL 8 repo
 RUN rpm -Uvh epel-release-latest-8.noarch.rpm
@@ -32,7 +32,7 @@ RUN dnf update -y --disableplugin=subscription-manager --nodocs \
     && dnf clean all \
     && rm -rf /var/cache/dnf
 
-COPY takserver-fedhub-docker-5.0-RELEASE-34/tak/ /opt/tak/
+COPY tak/ /opt/tak/
 RUN chmod u=rwx /opt/tak \
     && find /opt/tak/ -type d -exec chmod u=rwx {} \; \
 	&& find /opt/tak/ -type f -name "*.*" -exec chmod u=rw {} \; \

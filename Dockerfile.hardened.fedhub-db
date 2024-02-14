@@ -10,7 +10,7 @@ FROM ${BASE_REGISTRY}/${BASE_DEPLOY_IMAGE}:${BASE_DEPLOY_TAG} as deploy_containe
 
 USER root
 
-COPY takserver-fedhub-docker-5.0-RELEASE-34/tak/ /opt/tak/
+COPY tak/ /opt/tak/
 RUN chmod u=rwx /opt/tak \
     && find /opt/tak/ -type d -exec chmod u=rwx {} \; \
 	&& find /opt/tak/ -type f -name "*.*" -exec chmod u=rw {} \; \

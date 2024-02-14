@@ -16,11 +16,11 @@ RUN dnf -y upgrade --nodocs \
     && rm -rf /var/cache/dnf
 
 # Adding RHEL repos and signatures
-COPY takserver-docker-hardened-5.0-RELEASE-34/tak/security/rpms/repos/* /etc/yum.repos.d/
-COPY takserver-docker-hardened-5.0-RELEASE-34/tak/security/rpms/signatures /opt/signatures
+COPY tak/security/rpms/repos/* /etc/yum.repos.d/
+COPY tak/security/rpms/signatures /opt/signatures
 
 # Install EPEL 8 repo
-COPY takserver-docker-hardened-5.0-RELEASE-34/tak/security/*.rpm .
+COPY tak/security/*.rpm .
 RUN rpm -Uvh epel-release-latest-8.noarch.rpm
 
 #Update postgresql GPG and repo
