@@ -13,9 +13,7 @@ login:
 create_dirs:
 	@echo "** creating directory structure **"
 	unzip $$TAK_RELEASE.zip
-	cp $$TAK_RELEASE/docker/Dockerfile.* .
 	unzip $$HUB_RELEASE.zip
-	cp $$HUB_RELEASE/docker/Dockerfile.* .
 	
 clean_dirs:
 	@echo '** removing unzipped release and dockerfiles **'
