@@ -1,0 +1,22 @@
+## Environment variables outside image context. These will be available until the first FROM statement.
+ARG BASE_REGISTRY=registry1.dso.mil
+ARG BASE_DEPLOY_IMAGE=ironbank/opensource/mongodb/mongodb
+ARG BASE_DEPLOY_TAG=6.0.12
+
+####################################################################################################
+
+## Base deploy image
+FROM ${BASE_REGISTRY}/${BASE_DEPLOY_IMAGE}:${BASE_DEPLOY_TAG} as deploy_container
+
+USER root
+
+COPY takserver-fedhub-docker-5.0-RELEASE-34/tak/ /opt/tak/
+RUN chmod u=rwx /opt/tak \
+    && find /opt/tak/ -type d -exec chmod u=rwx {} \; \
+	&& find /opt/tak/ -type f -name "*.*" -exec chmod u=rw {} \; \
+	&& find /opt/tak/ -type f -name "*.sh" -exec chmod u=rx {} \;
+
+
+RUN mkdir -p /var/lib/mongodb
+
+ENTRYPOINT ["/bin/sh","-c","/opt/tak/federation-hub/scripts/db/configureInDocker.sh && tail -f /dev/null"]

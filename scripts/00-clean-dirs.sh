@@ -10,13 +10,11 @@ if [[ -d ${HUB_RELEASE} ]]; then
   rm -rf ${HUB_RELEASE}
 fi
 
-docker_files=$(find . -name Dockerfile\* -type f | wc -l)
-if [[ ${docker_files} -gt 0 ]]; then
-  rm Dockerfile*
-fi
-# rm Dockerfile.*
+#docker_files=$(ls Dockerfile.* 2>/dev/null | wc -l)
+#if [[ ${docker_files} -gt 0 ]]; then
+#  rm -rf Dockerfile.*
+#fi
 
 if [[ -d files ]]; then
   rm -rf files
 fi
-

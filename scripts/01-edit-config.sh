@@ -32,6 +32,11 @@ function tak_edit_dockerfiles() {
   # server config
   sed -i "s|COPY tak/security/\*.rpm .|COPY ${tak_source_dir}/security/*.rpm .|g" Dockerfile.hardened-takserver
   sed -i "s|COPY --chown=tak:0 tak/ /opt/tak|COPY --chown=tak:0 ${tak_source_dir} /opt/tak|g" Dockerfile.hardened-takserver
+  #fedhub config
+  sed -i "s|COPY tak/security/\*.rpm .|COPY ${hub_source_dir}/security/*.rpm .|g" Dockerfile.hardened.fedhub
+  sed -i "s|COPY tak/ /opt/tak/|COPY ${hub_source_dir}/ /opt/tak/|g" Dockerfile.hardened.fedhub
+  #fedhubdb config
+  sed -i "s|COPY tak/ /opt/tak/|COPY ${hub_source_dir}/ /opt/tak/|g" Dockerfile.hardened.fedhub-db
 }
 
 function hub_edit_files() {
@@ -47,3 +52,4 @@ main() {
 }
 
 main
+

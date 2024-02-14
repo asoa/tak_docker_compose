@@ -1,0 +1,41 @@
+## Environment variables outside image context. These will be available until the first FROM statement.
+ARG BASE_REGISTRY=registry1.dso.mil
+ARG BASE_DEPLOY_IMAGE=ironbank/redhat/openjdk/openjdk17
+ARG BASE_DEPLOY_TAG=1.17
+
+####################################################################################################
+
+## Base deploy image
+FROM ${BASE_REGISTRY}/${BASE_DEPLOY_IMAGE}:${BASE_DEPLOY_TAG} as deploy_container
+
+USER root
+
+# Upgrade first
+RUN dnf -y upgrade --nodocs \
+    && dnf clean all \
+    && rm -rf /var/cache/dnf
+
+
+COPY takserver-docker-hardened-5.0-RELEASE-34/tak/security/*.rpm .
+
+# Install EPEL 8 repo
+RUN rpm -Uvh epel-release-latest-8.noarch.rpm
+
+
+# Install dependencies
+RUN dnf update -y --disableplugin=subscription-manager --nodocs \
+    && dnf install -y --disableplugin=subscription-manager --nodocs \
+           xemacs-nox \
+           net-tools \
+           netcat \
+           vim \
+    && dnf clean all \
+    && rm -rf /var/cache/dnf
+
+COPY takserver-fedhub-docker-5.0-RELEASE-34/tak/ /opt/tak/
+RUN chmod u=rwx /opt/tak \
+    && find /opt/tak/ -type d -exec chmod u=rwx {} \; \
+	&& find /opt/tak/ -type f -name "*.*" -exec chmod u=rw {} \; \
+	&& find /opt/tak/ -type f -name "*.sh" -exec chmod u=rx {} \;
+
+ENTRYPOINT ["/bin/bash", "-c", "/opt/tak/federation-hub/scripts/configureInDocker.sh init"]
