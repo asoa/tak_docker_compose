@@ -10,7 +10,7 @@ function edit_core_config() {
   replacement_string='<connection url=\"jdbc:postgresql://tak-database-hardened:5432/cot\" username=\"martiuser\" password=\"'"${DB_PASS}"'\" />'
   
   cp ${tak_source_dir}/CoreConfig.example.xml ${tak_source_dir}/CoreConfig.xml
-  sed -i "s|${string_to_replace}|${replacement_string}|g" ${tak_source_dir}/CoreConfig.xml
+  sed -i '' "s|${string_to_replace}|${replacement_string}|g" ${tak_source_dir}/CoreConfig.xml
   chmod 666 ${tak_source_dir}/CoreConfig.xml
 }
 
@@ -19,35 +19,34 @@ function edit_pg_hba() {
   echo -e ${string_to_add} >> ${tak_source_dir}/db-utils/pg_hba.conf
 }
 
-# modifies path to 
 function tak_edit_dockerfiles() {
   # ca config
-  sed -i "s|COPY tak/security/\*.rpm .|COPY ${tak_source_dir}/security/*.rpm .|g" Dockerfile.ca
-  sed -i "s|COPY --chown=tak:0 tak/certs/ /tak/certs|COPY --chown=tak:0 ${tak_source_dir}/certs/ /tak/certs|g"  Dockerfile.ca
+  sed -i '' "s|COPY tak/security/\*.rpm .|COPY ${tak_source_dir}/security/*.rpm .|g" Dockerfile.ca
+  sed -i '' "s|COPY --chown=tak:0 tak/certs/ /tak/certs|COPY --chown=tak:0 ${tak_source_dir}/certs/ /tak/certs|g"  ${TAK_RELEASE}/docker/Dockerfile.ca
   # db config
-  sed -i "s|COPY tak/security/rpms/repos/\* /etc/yum.repos.d/|COPY ${tak_source_dir}/security/rpms/repos/* /etc/yum.repos.d/|g" Dockerfile.hardened-takserver-db
-  sed -i "s|COPY tak/security/rpms/signatures /opt/signatures|COPY ${tak_source_dir}/security/rpms/signatures /opt/signatures|g" Dockerfile.hardened-takserver-db
-  sed -i "s|COPY tak/security/\*.rpm .|COPY ${tak_source_dir}/security/*.rpm .|g" Dockerfile.hardened-takserver-db
-  sed -i "s|COPY --chown=postgres:0 tak/ /opt/tak|COPY --chown=postgres:0 ${tak_source_dir}/ /opt/tak|g" Dockerfile.hardened-takserver-db
+  sed -i '' "s|COPY tak/security/rpms/repos/\* /etc/yum.repos.d/|COPY ${tak_source_dir}/security/rpms/repos/* /etc/yum.repos.d/|g" Dockerfile.hardened-takserver-db
+  sed -i '' "s|COPY tak/security/rpms/signatures /opt/signatures|COPY ${tak_source_dir}/security/rpms/signatures /opt/signatures|g" Dockerfile.hardened-takserver-db
+  sed -i '' "s|COPY tak/security/\*.rpm .|COPY ${tak_source_dir}/security/*.rpm .|g" Dockerfile.hardened-takserver-db
+  sed -i '' "s|COPY --chown=postgres:0 tak/ /opt/tak|COPY --chown=postgres:0 ${tak_source_dir}/ /opt/tak|g" ${TAK_RELEASE}/docker/Dockerfile.hardened-takserver-db
   # server config
-  sed -i "s|COPY tak/security/\*.rpm .|COPY ${tak_source_dir}/security/*.rpm .|g" Dockerfile.hardened-takserver
-  sed -i "s|COPY --chown=tak:0 tak /opt/tak|COPY --chown=tak:0 ${tak_source_dir} /opt/tak|g" Dockerfile.hardened-takserver
-  #fedhub config
-  sed -i "s|COPY tak/security/\*.rpm .|COPY ${tak_source_dir}/security/*.rpm .|g" Dockerfile.hardened.fedhub
-  sed -i "s|COPY tak/ /opt/tak/|COPY ${hub_source_dir}/ /opt/tak/|g" Dockerfile.hardened.fedhub
-  #fedhubdb config
-  sed -i "s|COPY tak/ /opt/tak/|COPY ${hub_source_dir}/ /opt/tak/|g" Dockerfile.hardened.fedhub-db
+  sed -i '' "s|COPY tak/security/\*.rpm .|COPY ${tak_source_dir}/security/*.rpm .|g" Dockerfile.hardened-takserver
+  sed -i '' "s|COPY --chown=tak:0 tak/ /opt/tak|COPY --chown=tak:0 ${tak_source_dir} /opt/tak|g" ${TAK_RELEASE}/docker/Dockerfile.hardened-takserver
+  # fedhub config
+  sed -i '' "s|COPY tak/security/\*.rpm .|COPY ${tak_source_dir}/security/*.rpm .|g" Dockerfile.fedhub
+  sed -i '' "s|COPY tak/ /opt/tak/|COPY ${hub_source_dir}/ /opt/tak/|g" ${HUB_RELEASE}/docker/Dockerfile.fedhub
+  # fedhubdb config
+  sed -i '' "s|COPY tak/ /opt/tak/|COPY ${hub_source_dir}/ /opt/tak/|g" ${HUB_RELEASE}/docker/Dockerfile.fedhub-db
 }
 
 function hub_edit_files() {
   # tak/federation-hub/configs/federation-hub-broker.yml
-  sed -i "s|dbPassword:|dbPassword: "${HUB_DB_PASS}"|g" ${hub_source_dir}/federation-hub/configs/federation-hub-broker.yml
+  sed -i '' "s|dbPassword:|dbPassword: "${HUB_DB_PASS}"|g" ${hub_source_dir}/federation-hub/configs/federation-hub-broker.yml
 }
 
 main() {
   edit_core_config
   edit_pg_hba
-  tak_edit_dockerfiles
+  # tak_edit_dockerfiles
   hub_edit_files
 }
 

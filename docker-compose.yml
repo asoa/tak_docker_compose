@@ -2,8 +2,8 @@ version: '3.6'
 services:
   ca:
     build: 
-      context: .
-      dockerfile: Dockerfile.ca
+      context: ${TAK_RELEASE}
+      dockerfile: docker/Dockerfile.ca
       args:
         ARG_CA_NAME: ${CA_NAME}
         ARG_STATE: ${STATE}
@@ -20,8 +20,8 @@ services:
       - takserver-net-hardened
   db:
     build: 
-      context: .
-      dockerfile: Dockerfile.hardened-takserver-db
+      context: ${TAK_RELEASE}
+      dockerfile: docker/Dockerfile.hardened-takserver-db
     container_name: tak-database-hardened
     environment:
       - envpass=${DB_PASS}
@@ -38,8 +38,8 @@ services:
           condition: service_healthy
   server:
     build: 
-      context: .
-      dockerfile: Dockerfile.hardened-takserver
+      context: ${TAK_RELEASE}
+      dockerfile: docker/Dockerfile.hardened-takserver
     container_name: takserver-hardened
     ports:
       - 8089:8089
@@ -54,8 +54,8 @@ services:
         condition: service_healthy
   hubdb:
     build:
-      context: .
-      dockerfile: Dockerfile.hardened.fedhub-db
+      context: ${HUB_RELEASE}
+      dockerfile: docker/Dockerfile.fedhub-db
     container_name: hub-db
     ports:
       - 27017:27017
@@ -69,8 +69,8 @@ services:
         condition: service_healthy
   hub:
     build:
-      context: .
-      dockerfile: Dockerfile.hardened.fedhub
+      context: ${HUB_RELEASE}
+      dockerfile: docker/Dockerfile.fedhub
     container_name: hub
     ports:
       - 9100-9102:9100-9102

@@ -3,9 +3,6 @@
 include .env
 export
 
-test: 
-	./scripts/06-up.sh $(DEPLOY_HUB)
-
 login:
 	@echo '** logging into iron bank **'
 	docker login -u $$DOCKER_USER -p $$DOCKER_PASS registry1.dso.mil
@@ -37,7 +34,7 @@ add_user:
 
 down:
 	@echo '** stopping containers **'
-	docker-compose down -v
+	docker compose down -v
 
 main: clean_dirs create_dirs edit_configs build up
 
