@@ -5,12 +5,13 @@ source .env
 tak_source_dir=${TAK_RELEASE}/tak
 hub_source_dir=${HUB_RELEASE}/tak
 
+# removing '' from sed for linux compatibility
 function edit_core_config() {
   string_to_replace='<connection url="jdbc:postgresql://tak-database:5432/cot" username="martiuser" password="" />'
   replacement_string='<connection url=\"jdbc:postgresql://tak-database-hardened:5432/cot\" username=\"martiuser\" password=\"'"${DB_PASS}"'\" />'
   
   cp ${tak_source_dir}/CoreConfig.example.xml ${tak_source_dir}/CoreConfig.xml
-  sed -i '' "s|${string_to_replace}|${replacement_string}|g" ${tak_source_dir}/CoreConfig.xml
+  sed -i "s|${string_to_replace}|${replacement_string}|g" ${tak_source_dir}/CoreConfig.xml
   chmod 666 ${tak_source_dir}/CoreConfig.xml
 }
 
@@ -40,7 +41,7 @@ function tak_edit_dockerfiles() {
 
 function hub_edit_files() {
   # tak/federation-hub/configs/federation-hub-broker.yml
-  sed -i '' "s|dbPassword:|dbPassword: "${HUB_DB_PASS}"|g" ${hub_source_dir}/federation-hub/configs/federation-hub-broker.yml
+  sed -i "s|dbPassword:|dbPassword: "${HUB_DB_PASS}"|g" ${hub_source_dir}/federation-hub/configs/federation-hub-broker.yml
 }
 
 main() {
